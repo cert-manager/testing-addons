@@ -37,11 +37,21 @@ To use Kubernetes Provider to configure Cert-Manager. By default, it create a `C
 
 ## Usage Steps
 
-Execute `terragrunt run-all init` to init providers of all modules.
+### 1. Execute `terragrunt run-all init` to init providers of all modules.
 
-Execute `terragrunt run-all apply` to deploy all modules.
+### 2. Configurate custom variable.
 
-Execute `terragrunt run-all destroy` to clean test environment.
+You can configurate custom variables in `common.tfvars`.
+
+```
+# Path to the kubeconfig file to use for connecting kubernetes cluster. Default is "~/.kube/config"
+kubeconfig_path="~/.kube/config"
+......
+```
+
+### 3. Execute `terragrunt run-all apply` to deploy all modules.
+
+### 4. Execute `terragrunt run-all destroy` to clean test environment.
 
 ### Note
 If you want to run it in [Kind](https://kind.sigs.k8s.io/) cluster, you need to [create extra port mappings](https://kind.sigs.k8s.io/docs/user/configuration/#extra-port-mappings) to `vault-install` module to port forward.
