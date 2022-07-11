@@ -54,9 +54,9 @@ resource "kubernetes_manifest" "demo-app-vault-cert" {
       "namespace" = "default"
     }
     "spec" = {
-      "commonName" = "demo-app.cert-manager.io"
+      "commonName" = "demo-app.${var.vault_pki_root_domain}"
       "secretName" = "demo-app-tls"
-      "dnsNames"   = ["demo-app.cert-manager.io"]
+      "dnsNames"   = ["demo-app.${var.vault_pki_root_domain}"]
       "issuerRef" = {
         "name" = kubernetes_manifest.vault-issuer.manifest.metadata.name
         "kind" = kubernetes_manifest.vault-issuer.manifest.kind
