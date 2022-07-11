@@ -25,7 +25,7 @@ resource "vault_pki_secret_backend_role" "role" {
   allow_ip_sans    = true
   key_type         = "rsa"
   key_bits         = 2048
-  allowed_domains  = ["cert-manager.io"]
+  allowed_domains  = [var.vault_pki_root_domain]
   allow_subdomains = true
 }
 
@@ -33,7 +33,7 @@ resource "vault_pki_secret_backend_root_cert" "ca" {
   depends_on           = [vault_mount.pki]
   backend              = vault_mount.pki.path
   type                 = "internal"
-  common_name          = "cert-manager.io"
+  common_name          = var.vault_pki_root_domain
   ttl                  = "31536000" # 1 year
   format               = "pem"
   private_key_format   = "der"

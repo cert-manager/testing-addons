@@ -20,8 +20,8 @@ resource "helm_release" "vault" {
   chart            = "vault"
   namespace        = "vault"
   create_namespace = true
-  version          = "0.20.1" # The version of Vault is 1.10.3
   wait             = true
+  version          = var.vault_version
 
   set {
     # This installs a single unsealed Vault server in the insecure dev mode with a memory storage backend.
