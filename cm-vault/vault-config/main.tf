@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     vault = {
-      source = "hashicorp/vault"
+      source  = "hashicorp/vault"
       version = "~> 3.5.0"
     }
   }
@@ -13,9 +13,9 @@ provider "vault" {
 }
 
 resource "vault_mount" "pki" {
-  path                      = "pki"
-  type                      = "pki"
-  max_lease_ttl_seconds     = 31536000 # 1 year
+  path                  = "pki"
+  type                  = "pki"
+  max_lease_ttl_seconds = 31536000 # 1 year
 }
 
 resource "vault_pki_secret_backend_role" "role" {

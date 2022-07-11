@@ -1,20 +1,20 @@
 terraform {
   required_providers {
     kubernetes = {
-        source  = "hashicorp/kubernetes"
-        version = "~> 2.11.0"
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.11.0"
     }
   }
 }
 
 provider "kubernetes" {
-  config_path = var.kubeconfig_path
+  config_path = pathexpand(var.kubeconfig_path)
 }
 
 // vault-token is used to connect vault
 resource "kubernetes_secret_v1" "vault-token" {
   metadata {
-    name = "vault-token"
+    name      = "vault-token"
     namespace = "cert-manager"
   }
   data = {
@@ -48,15 +48,15 @@ resource "kubernetes_manifest" "vault-issuer" {
 resource "kubernetes_manifest" "demo-app-vault-cert" {
   manifest = {
     "apiVersion" = "cert-manager.io/v1"
-    "kind" = "Certificate"
+    "kind"       = "Certificate"
     metadata = {
-      "name" = "demo-app-vault-cert"
+      "name"      = "demo-app-vault-cert"
       "namespace" = "default"
     }
     "spec" = {
       "commonName" = "demo-app.cert-manager.io"
       "secretName" = "demo-app-tls"
-      "dnsNames" = ["demo-app.cert-manager.io"]
+      "dnsNames"   = ["demo-app.cert-manager.io"]
       "issuerRef" = {
         "name" = kubernetes_manifest.vault-issuer.manifest.metadata.name
         "kind" = kubernetes_manifest.vault-issuer.manifest.kind
