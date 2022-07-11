@@ -35,10 +35,10 @@ resource "helm_release" "vault" {
 # ready https://github.com/helm/helm/pull/10920
 resource "null_resource" "wait_for_vault" {
   provisioner "local-exec" {
-   environment = {
-    KUBECONFIG = pathexpand(var.kubeconfig_path)
-   }
-   command = "kubectl wait --for condition=Ready=true pod/vault-0 -n vault --timeout 300s"
+    environment = {
+      KUBECONFIG = pathexpand(var.kubeconfig_path)
+    }
+    command = "kubectl wait --for condition=Ready=true pod/vault-0 -n vault --timeout 300s"
   }
   depends_on = [
     helm_release.vault
