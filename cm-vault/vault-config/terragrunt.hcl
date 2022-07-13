@@ -6,8 +6,8 @@ dependency "vault-install" {
 
 terraform {
   before_hook "before_hook" {
-    commands     = ["apply", "plan", "destroy"]
-    execute      = ["${get_parent_terragrunt_dir()}/_shared/start_vault_service.sh"]
+    commands = ["apply", "plan", "destroy"]
+    execute  = ["${get_parent_terragrunt_dir()}/_shared/start_vault_service.sh"]
   }
 
   after_hook "after_hook" {
