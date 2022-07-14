@@ -24,6 +24,7 @@ resource "vault_pki_secret_backend_role" "role" {
   ttl              = 31536000 # 1 year
   allow_ip_sans    = true
   key_type         = "rsa"
+  key_usage        = ["DigitalSignature", "KeyAgreement", "KeyEncipherment"]
   key_bits         = 2048
   allowed_domains  = [var.vault_pki_root_domain]
   allow_subdomains = true
