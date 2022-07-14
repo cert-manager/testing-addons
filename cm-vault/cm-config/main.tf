@@ -2,7 +2,7 @@ terraform {
   required_providers {
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.11.0"
+      version = "~> 2.12.1"
     }
   }
 }
@@ -43,6 +43,19 @@ resource "kubernetes_manifest" "vault-issuer" {
       }
     }
   }
+
+  wait {
+    condition {
+      type = "Ready"
+      status = "True"
+    }
+  }
+
+  timeouts {
+    create = "1m"
+    update = "1m"
+    delete = "30s"
+  }
 }
 
 resource "kubernetes_manifest" "demo-app-vault-cert" {
@@ -62,5 +75,18 @@ resource "kubernetes_manifest" "demo-app-vault-cert" {
         "kind" = kubernetes_manifest.vault-issuer.manifest.kind
       }
     }
+  }
+
+  wait {
+    condition {
+      type = "Ready"
+      status = "True"
+    }
+  }
+
+  timeouts {
+    create = "1m"
+    update = "1m"
+    delete = "30s"
   }
 }
