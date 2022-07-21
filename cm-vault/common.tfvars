@@ -10,3 +10,7 @@ vault_version = "0.20.1"
 
 # The root domain of the Vault PKI. Default is "cert-manager.io"
 vault_pki_root_domain = "cert-manager.io"
+
+# The authentication mechanism of Vault to be used by ClusterIssuer/Issuer. Default is "approle", the other is "token".
+# You can learn about the Vault authentication mechanism at https://cert-manager.io/docs/configuration/vault/#authenticating
+vault_authentication_mechanism = "approle"
