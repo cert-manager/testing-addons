@@ -4,13 +4,13 @@
 
 This Terragrunt workflow deploys and configures cert-manager, Hashicorp Vault and a cert-manager Vault `ClusterIssuer` to an existing Kubernetes cluster.
 
-Vault will be deployed in the insecure dev mode with a [PKI Secrets Engine](https://www.vaultproject.io/docs/secrets/pki) configured for issuing certs for `cert-manager.io` subdomains.
+Vault will be deployed in the insecure dev mode with a [PKI Secrets Engine](https://www.vaultproject.io/docs/secrets/pki) configured for issuing certs for `cert-manager.io` subdomains by default.
 
 A `ClusterIssuer` named `vault-issuer` will be created that can issue certs from this PKI using Vault's dev root token.
 
 A `Certificate` named `demo-app-vault-cert` will be created that issued by `vault-issuer`.
 
-> Note: The allowed DNS names are restricted to subdomains of `cert-manager.io`.
+> Note: The allowed DNS names are restricted to subdomains of `cert-manager.io` by default.
 
 ## Dependencies Graph
 
@@ -45,25 +45,24 @@ You can configurate custom variables in `common.tfvars`.
 
 ```
 # Path to the kubeconfig file to use for connecting kubernetes cluster. Default is "~/.kube/config"
-kubeconfig_path="~/.kube/config"
+kubeconfig_path = "~/.kube/config"
+
+# Cert-manger version to install. Default is "v1.8.2"
+cm_version = "v1.8.2"
+
+# Vault version to install. Default is "0.20.1" that is Vault Helm version corresponding to Vault version "1.10.3".
+# You can check the mapping between the Vault Helm version and the Vault version by executing `helm search repo hashicorp/vault -l`
+vault_version = "0.20.1"
+
+# The root domain of the Vault PKI. Default is "cert-manager.io"
+vault_pki_root_domain = "cert-manager.io"
+
+# The authentication mechanism of Vault to be used by ClusterIssuer/Issuer. Default is "approle", the other is "token".
+# You can learn about the Vault authentication mechanism at https://cert-manager.io/docs/configuration/vault/#authenticating
+vault_authentication_mechanism = "approle"
 ......
 ```
 
 ### 3. Execute `terragrunt run-all apply` to deploy all modules.
 
 ### 4. Execute `terragrunt run-all destroy` to clean test environment.
-
-### Note
-If you want to run it in [Kind](https://kind.sigs.k8s.io/) cluster, you need to [create extra port mappings](https://kind.sigs.k8s.io/docs/user/configuration/#extra-port-mappings) to `vault-install` module to port forward.
-
-To use this config, place the contents in a file `config.yaml` and then run `kind create cluster --config=config.yaml` from the same directory.
-
-```
-apiVersion: kind.x-k8s.io/v1alpha4
-kind: Cluster
-nodes:
-- role: control-plane
-  extraPortMappings:
-  - containerPort: 30200
-    hostPort: 30200
-```

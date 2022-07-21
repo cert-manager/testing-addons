@@ -39,7 +39,7 @@ $ export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
 
 ## Usage Steps
 
-Take Vault as a example.
+Take Vault as an example.
 
 ### 1. Go to the installation directory of specific dependency.
 
