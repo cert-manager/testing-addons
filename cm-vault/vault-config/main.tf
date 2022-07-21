@@ -42,3 +42,45 @@ resource "vault_pki_secret_backend_root_cert" "ca" {
   key_bits             = 2048
   exclude_cn_from_sans = true
 }
+
+# AppRole Authentication Method
+resource "vault_auth_backend" "approle" {
+  count = var.vault_authentication_mechanism == "approle" ? 1 : 0
+
+  type = "approle"
+}
+
+resource "vault_approle_auth_backend_role" "auth_role" {
+  count = var.vault_authentication_mechanism == "approle" ? 1 : 0
+
+  backend        = vault_auth_backend.approle[0].path
+  role_name      = "auth-role"
+  token_policies = [vault_policy.approle-pki-policy[0].name]
+}
+
+resource "vault_approle_auth_backend_role_secret_id" "auth_role_secret_id" {
+  count = var.vault_authentication_mechanism == "approle" ? 1 : 0
+
+  backend   = vault_auth_backend.approle[0].path
+  role_name = vault_approle_auth_backend_role.auth_role[0].role_name
+}
+
+resource "vault_policy" "approle-pki-policy" {
+  count = var.vault_authentication_mechanism == "approle" ? 1 : 0
+
+  name   = "cert-manager-issuer-policy"
+  policy = <<EOT
+path "pki/sign/cert-manager-io" {
+  capabilities = ["create", "read", "update", "patch", "delete", "list"]
+}
+EOT 
+}
+
+output "secret_id" {
+  value     = var.vault_authentication_mechanism == "approle" ? vault_approle_auth_backend_role_secret_id.auth_role_secret_id[0].secret_id : "null"
+  sensitive = true
+}
+
+output "role_id" {
+  value = var.vault_authentication_mechanism == "approle" ? vault_approle_auth_backend_role.auth_role[0].role_id : "null"
+}

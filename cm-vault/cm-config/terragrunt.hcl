@@ -14,7 +14,15 @@ dependency "cm-install" {
 dependency "vault-config" {
   config_path = "../vault-config"
 
-  skip_outputs = "true"
+  mock_outputs = {
+    secret_id = "null"
+    role_id   = "null"
+  }
+}
+
+inputs = {
+  vault_secret_id = dependency.vault-config.outputs.secret_id
+  vault_role_id   = dependency.vault-config.outputs.role_id
 }
 
 terraform {
