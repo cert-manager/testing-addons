@@ -1,0 +1,35 @@
+# validate any terraform file changes
+name: Terraform lint
+
+env:
+  TERRAFORM_VERSION: "1.2.5"
+  TERRAGRUNT_VERSION: "0.38.6"
+
+on:
+  pull_request:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  terraform-lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+          # Fix terragrunt mislead the result of output, 
+          # refering https://github.com/gruntwork-io/terragrunt/issues/1202#issuecomment-634915832
+          terraform_wrapper: false
+      
+      - name: Set up Terragrunt
+        uses: eLco/setup-terragrunt@v1
+        with:
+          terragrunt_version: ${{ env.TERRAGRUNT_VERSION }}
+
+      - name: lint
+        run: scripts/verify-staticcheck.sh
