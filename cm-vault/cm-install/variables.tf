@@ -5,5 +5,4 @@ variable "kubeconfig_path" {
 
 variable "cm_version" {
   type    = string
-  default = "v1.8.2"
 }
