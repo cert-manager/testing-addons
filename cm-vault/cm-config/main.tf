@@ -116,13 +116,19 @@ resource "kubernetes_manifest" "vault-issuer-auth-approle" {
   }
 }
 
+resource "kubernetes_namespace_v1" "cert-demo" {
+  metadata {
+    name = "cert-demo"
+  }
+}
+
 resource "kubernetes_manifest" "demo-app-vault-cert" {
   manifest = {
     "apiVersion" = "cert-manager.io/v1"
     "kind"       = "Certificate"
     metadata = {
       "name"      = "demo-app-vault-cert"
-      "namespace" = "default"
+      "namespace" = "${kubernetes_namespace_v1.cert-demo.metadata[0].name}"
     }
     "spec" = {
       "commonName" = "demo-app.${var.vault_pki_root_domain}"

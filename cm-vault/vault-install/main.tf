@@ -4,6 +4,11 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.5.1"
     }
+
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.12.1"
+    }
   }
 }
 
@@ -13,15 +18,25 @@ provider "helm" {
   }
 }
 
+provider "kubernetes" {
+  config_path = pathexpand(var.kubeconfig_path)
+}
+
+# create vault namespace
+resource "kubernetes_namespace_v1" "vault" {
+  metadata {
+    name = "vault"
+  }
+}
+
 # deploy vault
 resource "helm_release" "vault" {
-  name             = "vault"
-  repository       = "https://helm.releases.hashicorp.com"
-  chart            = "vault"
-  namespace        = "vault"
-  create_namespace = true
-  wait             = true
-  version          = var.vault_version
+  name       = "vault"
+  repository = "https://helm.releases.hashicorp.com"
+  chart      = "vault"
+  namespace  = kubernetes_namespace_v1.vault.metadata[0].name
+  wait       = true
+  version    = var.vault_version
 
   set {
     # This installs a single unsealed Vault server in the insecure dev mode with a memory storage backend.

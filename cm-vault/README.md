@@ -8,7 +8,7 @@ Vault will be deployed in the insecure dev mode with a [PKI Secrets Engine](http
 
 A `ClusterIssuer` named `vault-issuer` will be created that can issue certs from this PKI using Vault's dev root token.
 
-A `Certificate` named `demo-app-vault-cert` will be created that issued by `vault-issuer`.
+A `Certificate` named `demo-app-vault-cert` in `cert-demo` namespace will be created that issued by `vault-issuer`.
 
 > Note: The allowed DNS names are restricted to subdomains of `cert-manager.io` by default.
 
