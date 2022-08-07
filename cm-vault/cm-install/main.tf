@@ -37,8 +37,12 @@ resource "helm_release" "cert-manager" {
   namespace  = kubernetes_namespace_v1.cert-manager.metadata[0].name
   version    = var.cm_version
 
-  set {
-    name  = "installCRDs"
-    value = "true"
+  dynamic "set" {
+    for_each = var.cm_arguments
+    iterator = args
+    content {
+      name  = args.key
+      value = args.value
+    }
   }
 }

@@ -4,6 +4,11 @@ kubeconfig_path = "~/.kube/config"
 # Cert-manger version to install. Default is "v1.9.1"
 cm_version = "v1.9.1"
 
+# The arguments will be passed to the cm-manager helm values
+cm_arguments = {
+  installCRDs = "true"
+}
+
 # Vault version to install. Default is "0.20.1" that is Vault Helm version corresponding to Vault version "1.10.3".
 # You can check the mapping between the Vault Helm version and the Vault version by executing `helm search repo hashicorp/vault -l`
 vault_version = "0.20.1"
