@@ -31,7 +31,7 @@ terraform {
     ]
   }
 
-  extra_arguments "silence-warnings" {
+  extra_arguments "compact-warnings" {
     commands = [
       "apply",
       "plan",
