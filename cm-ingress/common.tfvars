@@ -6,7 +6,7 @@ cm_version = "v1.9.1"
 
 # Ingress-nginx version to install. Default is "4.2.3" that is Ingress-nginx Helm version corresponding to Ingress-nginx version "1.3.0".
 # You can check the mapping between the Ingress-nginx Helm version and the Ingress-nginx APP version by executing `helm search repo ingress-nginx/ingress-nginx -l`
-ingress-nginx_version = "4.2.3"
+ingress_nginx_version = "4.2.3"
 
 # Namespace that demo is installed. Default is "ingress-demo"
 demo_namespace = "ingress-demo"
@@ -19,17 +19,28 @@ cm_arguments = {
   installCRDs = "true"
 }
 
+# The following parameters must be used in combination
+# 1. issuer_type is "SelfSignedCA" and controller.service.type is "ClusterIP", which can be tested in a local kind environment.
+# 2. issuer_type is "ACME" and controller.service.type is "LoadBalancer", which can be tested in a cloud environment such as GKE.
+
+# Type of Issuer that is used to issue certificates. Default is "ACME", the other is "SelfSignedCA"
+issuer_type = "ACME"
+
 # The arguments will be passed to the ingress-nginx helm values
 ingress_nginx_arguments = {
+  # The service type of ingress-nginx-controller. Default is "LoadBalancer", the other is "ClusterIP"
+  "controller.service.type" = "LoadBalancer"
+  # IP address to assign to load balancer when using "LoadBalancer" type (if supported)
+  # "controller.service.loadBalancerIP" = "<my-static-ip>"
+
   "controller.image.digest"              = ""
-  "controller.service.type"              = "ClusterIP"
   "admissionWebhooks.enabled"            = false
   "controller.admissionWebhooks.enabled" = true
   "controller.watchIngressWithoutClass"  = true
-
-  # IP address to assign to load balancer when using "LoadBalancer" type (if supported)
-  # "controller.service.loadBalancerIP" = "<my-static-ip>"
 }
+
+# The email of "letsencrypt" ACME issuer. Must be a valid email if you set `issuer_type = "ACME"`
+acme_email = "test@example.com"
 
 # Hostname that demo ingress to use. Default is "example.com"
 ingress_hostname = "example.com"

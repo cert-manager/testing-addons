@@ -1,9 +1,3 @@
-dependency "ingress-controller-install" {
-  config_path = "../ingress-controller-install"
-
-  skip_outputs = "true"
-}
-
 dependency "cm-config" {
   config_path = "../cm-config"
 
