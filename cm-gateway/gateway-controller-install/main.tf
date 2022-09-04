@@ -28,43 +28,22 @@ resource "kubernetes_namespace_v1" "projectcontour" {
   }
 }
 
-resource "kubernetes_cluster_role_v1" "temporary-contour-clusterrole" {
-  metadata {
-    name = "temporary-contour-clusterrole"
-  }
-
-  rule {
-    api_groups = ["gateway.networking.k8s.io"]
-    resources  = ["referencegrants"]
-    verbs      = ["get", "list", "watch"]
-  }
-}
-
-resource "kubernetes_cluster_role_binding_v1" "temporary-contour-clusterrolebinding" {
-  metadata {
-    name = "temporary-contour-clusterrolebinding"
-  }
-
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "ClusterRole"
-    name      = kubernetes_cluster_role_v1.temporary-contour-clusterrole.metadata[0].name
-  }
-
-  subject {
-    kind      = "ServiceAccount"
-    name      = "bitnami-contour-contour"
-    namespace = kubernetes_namespace_v1.projectcontour.metadata[0].name
-  }
-}
-
 resource "helm_release" "contour" {
-  name       = "bitnami"
+  name       = "contour"
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "contour"
   namespace  = kubernetes_namespace_v1.projectcontour.metadata[0].name
   wait       = true
   version    = var.contour_version
+
+  set {
+    # This is necessary config to enable gateway function of contour
+    name  = "configInline"
+    value = <<EOF
+  gateway:
+    controllerName: projectcontour.io/projectcontour/contour
+EOF
+  }
 
   dynamic "set" {
     for_each = var.contour_arguments
@@ -74,8 +53,4 @@ resource "helm_release" "contour" {
       value = args.value
     }
   }
-
-  depends_on = [
-    kubernetes_cluster_role_binding_v1.temporary-contour-clusterrolebinding
-  ]
 }

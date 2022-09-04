@@ -1,5 +1,11 @@
-dependency "vault-install" {
+dependency "cm-install" {
   config_path = "../cm-install"
+
+  skip_outputs = "true"
+}
+
+dependency "gateway-controller-install" {
+  config_path = "../gateway-controller-install"
 
   skip_outputs = "true"
 }
