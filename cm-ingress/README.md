@@ -6,15 +6,15 @@ This Terragrunt workflow deploys and configures cert-manager and [Ingress Contro
 
 [Ingress NGINX Controller](https://kubernetes.github.io/ingress-nginx/deploy/#quick-start) will be installed by default.
 
-An `Issuer` named `selfsigned-issuer` in default `ingress-demo` namespace will be created that can issue CA certs named `selfsigned-ca-tls` in the namespace.
-
 An `Issuer` named `ingress-issuer` in default `ingress-demo` namespace will be created that can issue certificates to ingress.
+
+> Note: by default, the type of `ingress-issuer` is `ACME`, you need to configure your own `acme_email`. If you only test it in the local Kubernetes environment, you can set `issuer_type = "SelfSignedCA"` and `controller.service.type = "ClusterIP"`.
 
 An `Ingress` named `cm-testing-ingress` in default `ingress-demo` namespace will be created that will use a tls certificate issued by `ingress-issuer`.
 
 ## Dependencies Graph
 
-Terragrunt is used to ensure the correct order of dependency installation, i.e that cert-manager `ClusterIssuer` is not created before installing cert-manager. See dependency graph below:
+Terragrunt is used to ensure the correct order of dependency installation, i.e that cert-manager `Issuer` is not created before installing cert-manager. See dependency graph below:
 
 ![image](graph.svg)
 
@@ -28,7 +28,9 @@ To install [Ingress Controller](https://kubernetes.io/docs/concepts/services-net
 
 ### cm-config
 
-To use Kubernetes Provider to configure Cert-Manager. By default, it create a `Issuer` named `selfsigned-issuer ` that can issue CA certs named `selfsigned-ca-tls` in the namespace, and create an `Issuer` named `ingress-issuer` that can issue certificates to ingress.
+By default, it will create an `Issuer` named `ingress-issuer` that use configured `ACME` to issue certificates to ingress.
+
+If you set `issuer_type = "SelfSignedCA"`, it create a `Issuer` named `selfsigned-issuer ` that can issue CA certs named `selfsigned-ca-tls` in the namespace, and create an `Issuer` named `ingress-issuer` that can issue certificates to ingress.
 
 ### ingress-config
 
@@ -53,7 +55,7 @@ cm_version = "v1.9.1"
 
 # Ingress-nginx version to install. Default is "4.2.3" that is Ingress-nginx Helm version corresponding to Ingress-nginx version "1.3.0".
 # You can check the mapping between the Ingress-nginx Helm version and the Ingress-nginx APP version by executing `helm search repo ingress-nginx/ingress-nginx -l`
-ingress-nginx_version = "4.2.3"
+ingress_nginx_version = "4.2.3"
 
 # Namespace that demo is installed. Default is "ingress-demo"
 demo_namespace = "ingress-demo"
@@ -66,17 +68,28 @@ cm_arguments = {
   installCRDs = "true"
 }
 
+# The following parameters must be used in combination
+# 1. issuer_type is "SelfSignedCA" and controller.service.type is "ClusterIP", which can be tested in a local kind environment.
+# 2. issuer_type is "ACME" and controller.service.type is "LoadBalancer", which can be tested in a cloud environment such as GKE.
+
+# Type of Issuer that is used to issue certificates. Default is "ACME", the other is "SelfSignedCA"
+issuer_type = "ACME"
+
 # The arguments will be passed to the ingress-nginx helm values
 ingress_nginx_arguments = {
+  # The service type of ingress-nginx-controller. Default is "LoadBalancer", the other is "ClusterIP"
+  "controller.service.type"              = "LoadBalancer"
+  # IP address to assign to load balancer when using "LoadBalancer" type (if supported)
+  # "controller.service.loadBalancerIP" = "<my-static-ip>"
+  
   "controller.image.digest"              = ""
-  "controller.service.type"              = "ClusterIP"
   "admissionWebhooks.enabled"            = false
   "controller.admissionWebhooks.enabled" = true
   "controller.watchIngressWithoutClass"  = true
-
-  # IP address to assign to load balancer when using "LoadBalancer" type (if supported)
-  # "controller.service.loadBalancerIP" = "<my-static-ip>"
 }
+
+# The email of "letsencrypt" ACME issuer. Must be a valid email if you set `issuer_type = "ACME"`
+acme_email = "test@example.com"
 
 # Hostname that demo ingress to use. Default is "example.com"
 ingress_hostname = "example.com"
