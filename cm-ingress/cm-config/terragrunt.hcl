@@ -4,6 +4,12 @@ dependency "vault-install" {
   skip_outputs = "true"
 }
 
+dependency "ingress-controller-install" {
+  config_path = "../ingress-controller-install"
+
+  skip_outputs = "true"
+}
+
 terraform {
   extra_arguments "common_vars" {
     commands = [
