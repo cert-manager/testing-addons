@@ -11,12 +11,12 @@ provider "kubernetes" {
   config_path = pathexpand(var.kubeconfig_path)
 }
 
-resource "kubernetes_manifest" "gatewayclass-cmsolver" {
+resource "kubernetes_manifest" "gatewayclass-testing" {
   manifest = {
     "apiVersion" = "gateway.networking.k8s.io/v1alpha2"
     "kind"       = "GatewayClass"
     "metadata" = {
-      "name" = "cmsolver"
+      "name" = var.gateway_name
     }
     "spec" = {
       "controllerName" = "projectcontour.io/projectcontour/contour"
@@ -37,21 +37,21 @@ resource "kubernetes_manifest" "gatewayclass-cmsolver" {
   }
 }
 
-resource "kubernetes_manifest" "gateway-cmsolver" {
+resource "kubernetes_manifest" "gateway-testing" {
   manifest = {
     "apiVersion" = "gateway.networking.k8s.io/v1alpha2"
     "kind"       = "Gateway"
     "metadata" = {
-      "name"      = "cmsolver"
+      "name"      = var.gateway_name
       "namespace" = var.demo_namespace
       "annotations" = {
         "cert-manager.io/issuer" = var.issuer_name
       }
     }
     "spec" = {
-      "gatewayClassName" = kubernetes_manifest.gatewayclass-cmsolver.manifest.metadata.name
+      "gatewayClassName" = kubernetes_manifest.gatewayclass-testing.manifest.metadata.name
       "listeners" = [{
-        "name"     = "http"
+        "name"     = "https"
         "hostname" = var.gateway_hostname
         "protocol" = "HTTPS"
         "port"     = 443
@@ -63,7 +63,7 @@ resource "kubernetes_manifest" "gateway-cmsolver" {
         "tls" = {
           "mode" = "Terminate"
           "certificateRefs" = [{
-            "name" = "cmsolver-gateway-tls"
+            "name" = "${var.gateway_name}-tls"
           }]
         }
       }]

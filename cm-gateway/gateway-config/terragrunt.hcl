@@ -1,9 +1,3 @@
-dependency "gateway-install" {
-  config_path = "../gateway-controller-install"
-
-  skip_outputs = "true"
-}
-
 dependency "cm-config" {
   config_path = "../cm-config"
 

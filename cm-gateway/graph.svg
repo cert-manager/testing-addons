@@ -11,53 +11,53 @@
 <polygon fill="white" stroke="white" points="-4,5 -4,-256 312,-256 312,5 -4,5"/>
 <!-- cm&#45;config -->
 <g id="node1" class="node"><title>cm&#45;config</title>
-<ellipse fill="none" stroke="black" cx="239" cy="-162" rx="46.1964" ry="18"/>
-<text text-anchor="middle" x="239" y="-158.3" font-family="Times,serif" font-size="14.00">cm&#45;config</text>
+<ellipse fill="none" stroke="black" cx="127" cy="-162" rx="46.1964" ry="18"/>
+<text text-anchor="middle" x="127" y="-158.3" font-family="Times,serif" font-size="14.00">cm&#45;config</text>
 </g>
 <!-- cm&#45;install -->
 <g id="node2" class="node"><title>cm&#45;install</title>
-<ellipse fill="none" stroke="black" cx="261" cy="-90" rx="46.2191" ry="18"/>
-<text text-anchor="middle" x="261" y="-86.3" font-family="Times,serif" font-size="14.00">cm&#45;install</text>
+<ellipse fill="none" stroke="black" cx="46" cy="-90" rx="46.2191" ry="18"/>
+<text text-anchor="middle" x="46" y="-86.3" font-family="Times,serif" font-size="14.00">cm&#45;install</text>
 </g>
 <!-- cm&#45;config&#45;&gt;cm&#45;install -->
 <g id="edge1" class="edge"><title>cm&#45;config&#45;&gt;cm&#45;install</title>
-<path fill="none" stroke="black" d="M244.326,-144.055C246.775,-136.261 249.742,-126.822 252.489,-118.079"/>
-<polygon fill="black" stroke="black" points="255.911,-118.865 255.571,-108.275 249.233,-116.766 255.911,-118.865"/>
-</g>
-<!-- gateway&#45;api&#45;install -->
-<g id="node3" class="node"><title>gateway&#45;api&#45;install</title>
-<ellipse fill="none" stroke="black" cx="179" cy="-18" rx="76.0649" ry="18"/>
-<text text-anchor="middle" x="179" y="-14.3" font-family="Times,serif" font-size="14.00">gateway&#45;api&#45;install</text>
-</g>
-<!-- cm&#45;install&#45;&gt;gateway&#45;api&#45;install -->
-<g id="edge2" class="edge"><title>cm&#45;install&#45;&gt;gateway&#45;api&#45;install</title>
-<path fill="none" stroke="black" d="M242.393,-73.1159C231.72,-64.0046 218.126,-52.4002 206.266,-42.2756"/>
-<polygon fill="black" stroke="black" points="208.267,-39.3823 198.389,-35.5516 203.722,-44.7063 208.267,-39.3823"/>
-</g>
-<!-- gateway&#45;config -->
-<g id="node4" class="node"><title>gateway&#45;config</title>
-<ellipse fill="none" stroke="black" cx="157" cy="-234" rx="63.0666" ry="18"/>
-<text text-anchor="middle" x="157" y="-230.3" font-family="Times,serif" font-size="14.00">gateway&#45;config</text>
+<path fill="none" stroke="black" d="M108.62,-145.116C97.7734,-135.742 83.8736,-123.73 71.9262,-113.405"/>
+<polygon fill="black" stroke="black" points="73.8831,-110.471 64.0284,-106.58 69.306,-115.767 73.8831,-110.471"/>
 </g>
 <!-- gateway&#45;controller&#45;install -->
-<g id="node5" class="node"><title>gateway&#45;controller&#45;install</title>
-<ellipse fill="none" stroke="black" cx="98" cy="-90" rx="98.1881" ry="18"/>
-<text text-anchor="middle" x="98" y="-86.3" font-family="Times,serif" font-size="14.00">gateway&#45;controller&#45;install</text>
+<g id="node3" class="node"><title>gateway&#45;controller&#45;install</title>
+<ellipse fill="none" stroke="black" cx="209" cy="-90" rx="98.1881" ry="18"/>
+<text text-anchor="middle" x="209" y="-86.3" font-family="Times,serif" font-size="14.00">gateway&#45;controller&#45;install</text>
 </g>
-<!-- gateway&#45;config&#45;&gt;gateway&#45;controller&#45;install -->
-<g id="edge3" class="edge"><title>gateway&#45;config&#45;&gt;gateway&#45;controller&#45;install</title>
-<path fill="none" stroke="black" d="M149.883,-215.871C139.739,-191.457 121.029,-146.426 109.067,-117.635"/>
-<polygon fill="black" stroke="black" points="112.211,-116.081 105.142,-108.189 105.747,-118.767 112.211,-116.081"/>
+<!-- cm&#45;config&#45;&gt;gateway&#45;controller&#45;install -->
+<g id="edge2" class="edge"><title>cm&#45;config&#45;&gt;gateway&#45;controller&#45;install</title>
+<path fill="none" stroke="black" d="M145.607,-145.116C156.204,-136.07 169.679,-124.567 181.478,-114.494"/>
+<polygon fill="black" stroke="black" points="183.99,-116.952 189.323,-107.797 179.445,-111.628 183.99,-116.952"/>
 </g>
-<!-- gateway&#45;config&#45;&gt;cm&#45;config -->
-<g id="edge4" class="edge"><title>gateway&#45;config&#45;&gt;cm&#45;config</title>
-<path fill="none" stroke="black" d="M176.019,-216.765C186.936,-207.445 200.805,-195.605 212.748,-185.41"/>
-<polygon fill="black" stroke="black" points="215.315,-187.82 220.649,-178.666 210.771,-182.496 215.315,-187.82"/>
+<!-- gateway&#45;api&#45;install -->
+<g id="node4" class="node"><title>gateway&#45;api&#45;install</title>
+<ellipse fill="none" stroke="black" cx="127" cy="-18" rx="76.0649" ry="18"/>
+<text text-anchor="middle" x="127" y="-14.3" font-family="Times,serif" font-size="14.00">gateway&#45;api&#45;install</text>
+</g>
+<!-- cm&#45;install&#45;&gt;gateway&#45;api&#45;install -->
+<g id="edge3" class="edge"><title>cm&#45;install&#45;&gt;gateway&#45;api&#45;install</title>
+<path fill="none" stroke="black" d="M64.3802,-73.1159C74.9232,-64.0046 88.3512,-52.4002 100.067,-42.2756"/>
+<polygon fill="black" stroke="black" points="102.57,-44.7384 107.847,-35.5516 97.9927,-39.4421 102.57,-44.7384"/>
 </g>
 <!-- gateway&#45;controller&#45;install&#45;&gt;gateway&#45;api&#45;install -->
 <g id="edge5" class="edge"><title>gateway&#45;controller&#45;install&#45;&gt;gateway&#45;api&#45;install</title>
-<path fill="none" stroke="black" d="M117.608,-72.055C127.931,-63.1336 140.748,-52.0572 151.997,-42.3361"/>
-<polygon fill="black" stroke="black" points="154.575,-44.7343 159.852,-35.5475 149.998,-39.438 154.575,-44.7343"/>
+<path fill="none" stroke="black" d="M189.15,-72.055C178.598,-63.047 165.472,-51.8419 154.005,-42.0534"/>
+<polygon fill="black" stroke="black" points="156.262,-39.3781 146.384,-35.5475 151.717,-44.7021 156.262,-39.3781"/>
+</g>
+<!-- gateway&#45;config -->
+<g id="node5" class="node"><title>gateway&#45;config</title>
+<ellipse fill="none" stroke="black" cx="127" cy="-234" rx="63.0666" ry="18"/>
+<text text-anchor="middle" x="127" y="-230.3" font-family="Times,serif" font-size="14.00">gateway&#45;config</text>
+</g>
+<!-- gateway&#45;config&#45;&gt;cm&#45;config -->
+<g id="edge4" class="edge"><title>gateway&#45;config&#45;&gt;cm&#45;config</title>
+<path fill="none" stroke="black" d="M127,-215.697C127,-207.983 127,-198.712 127,-190.112"/>
+<polygon fill="black" stroke="black" points="130.5,-190.104 127,-180.104 123.5,-190.104 130.5,-190.104"/>
 </g>
 </g>
 </svg>
