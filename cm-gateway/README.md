@@ -54,8 +54,8 @@ You can configurate custom variables in `common.tfvars`.
 # Path to the kubeconfig file to use for connecting kubernetes cluster. Default is "~/.kube/config"
 kubeconfig_path = "~/.kube/config"
 
-# Cert-manger version to install. Default is "v1.9.1"
-cm_version = "v1.9.1"
+# Cert-manger version to install. Default is "v1.10.0"
+cm_version = "v1.10.0"
 
 # Contour version to install. Default is "7.10.2" that is Contour Helm version corresponding to Contour version "1.20.1".
 # You can check the mapping between the Contour Helm version and the Contour APP version by executing `helm search repo bitnami/contour -l`

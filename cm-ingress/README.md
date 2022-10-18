@@ -50,8 +50,8 @@ You can configurate custom variables in `common.tfvars`.
 # Path to the kubeconfig file to use for connecting kubernetes cluster. Default is "~/.kube/config"
 kubeconfig_path = "~/.kube/config"
 
-# Cert-manger version to install. Default is "v1.9.1"
-cm_version = "v1.9.1"
+# Cert-manger version to install. Default is "v1.10.0"
+cm_version = "v1.10.0"
 
 # Ingress-nginx version to install. Default is "4.2.3" that is Ingress-nginx Helm version corresponding to Ingress-nginx version "1.3.0".
 # You can check the mapping between the Ingress-nginx Helm version and the Ingress-nginx APP version by executing `helm search repo ingress-nginx/ingress-nginx -l`
