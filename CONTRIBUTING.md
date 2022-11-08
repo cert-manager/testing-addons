@@ -123,8 +123,8 @@ The commonly used variables that can be customized by users are set here, which 
 # Path to the kubeconfig file to use for connecting kubernetes cluster. Default is "~/.kube/config"
 kubeconfig_path = "~/.kube/config"
 
-# Cert-manger version to install. Default is "v1.9.1"
-cm_version = "v1.9.1"
+# Cert-manger version to install. Default is "v1.10.0"
+cm_version = "v1.10.0"
 ......
 ```
 
